@@ -96,8 +96,9 @@ new Vue({
 
                     if (message.emotes !== null) {
                         message.message = _this.twitchEmotes.formatMessage(message.message, message.emotes);
-                        message.message = _this.bttVEmotes.formatMessage(message.message);
                     }
+                    
+                    message.message = _this.bttVEmotes.formatMessage(message.message);
 
                     _this.logs.push(message);
                 });
