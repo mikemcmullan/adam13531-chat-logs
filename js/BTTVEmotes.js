@@ -69,16 +69,65 @@ var FormatBTTVEmotes = function () {
 			});
 		}
 	}, {
+		key: 'shouldWeReplace',
+		value: function shouldWeReplace(message, emote) {
+			var startPos = message.indexOf(emote);
+
+			// If the emote is not found at all.
+			if (startPos === -1) {
+				return false;
+			}
+
+			// The message only contained an emote.
+			if (emote.length === message.length) {
+				return true;
+			}
+
+			// The message starts with an emote.
+			if (startPos === 0 && message[emote.length] === ' ') {
+				return true;
+			}
+
+			// console.log(message[startPos-1], message[startPos+emote.length]);
+
+			// The message has an emote in the middle.
+			if (message[startPos - 1] === ' ' && message[startPos + emote.length] === ' ') {
+				return true;
+			}
+
+			// The message has an emote at the end.
+			if (message[startPos - 1] === ' ' && message[startPos + emote.length] === undefined) {
+				return true;
+			}
+
+			return false;
+		}
+	}, {
+		key: 'doReplace',
+		value: function doReplace(message, emote) {
+			var shouldContinue = true;
+
+			while (shouldContinue) {
+				if (this.shouldWeReplace(message, emote.code)) {
+					message = message.replace(emote.code, this.makeImage(emote.id));
+				} else {
+					shouldContinue = false;
+				}
+			}
+
+			return message;
+		}
+	}, {
 		key: 'formatMessage',
 		value: function formatMessage(message) {
 			var _this3 = this;
 
 			this.globalEmotes.forEach(function (emote) {
-				message = message.replace(emote.code, _this3.makeImage(emote.id));
+				message = _this3.doReplace(message, emote);
 			});
 
 			this.channelEmotes.forEach(function (emote) {
-				message = message.replace(emote.code, _this3.makeImage(emote.id));
+				message = _this3.doReplace(message, emote);
 			});
 
 			return message;
