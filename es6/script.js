@@ -86,14 +86,16 @@ new Vue({
 
                     response.data.data.forEach((message) => {
                         const createdAt = new Date(message.created_at);
-                        message.created_at = `${createdAt.toLocaleDateString('en-CA', this.dateOptions)}`;
+                        const local = new Date(createdAt.getTime() - createdAt.getTimezoneOffset() * 60000);
+
+                        message.created_at = `${local.toLocaleDateString('en-CA', this.dateOptions)}`;
 
                         message.message = message.message.linkify();
 
                         if (message.emotes !== null) {
                             message.message = this.twitchEmotes.formatMessage(message.message, message.emotes);
                         }
-                        
+
                         message.message = this.bttVEmotes.formatMessage(message.message);
 
                         this.logs.push(message);

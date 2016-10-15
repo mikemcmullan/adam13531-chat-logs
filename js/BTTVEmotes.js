@@ -20,7 +20,7 @@ var FormatBTTVEmotes = function () {
 	}, {
 		key: 'makeImage',
 		value: function makeImage(emoteId) {
-			return '<img class="emoticon" src="http://cdn.betterttv.net/emote/' + emoteId + '/1x">';
+			return '<img class="emoticon" src="//cdn.betterttv.net/emote/' + emoteId + '/1x">';
 		}
 	}, {
 		key: 'getEmotes',
@@ -87,3 +87,5 @@ var FormatBTTVEmotes = function () {
 
 	return FormatBTTVEmotes;
 }();
+
+exports.default = FormatBTTVEmotes;

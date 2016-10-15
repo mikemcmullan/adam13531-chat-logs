@@ -12,7 +12,7 @@ var FormatTwitchEmotes = function () {
 	_createClass(FormatTwitchEmotes, [{
 		key: 'makeImage',
 		value: function makeImage(emoteId) {
-			return '<img class="emoticon" src="http://static-cdn.jtvnw.net/emoticons/v1/' + emoteId + '/1.0">';
+			return '<img class="emoticon" src="//static-cdn.jtvnw.net/emoticons/v1/' + emoteId + '/1.0">';
 		}
 	}, {
 		key: 'parseEmotes',
@@ -68,3 +68,5 @@ var FormatTwitchEmotes = function () {
 
 	return FormatTwitchEmotes;
 }();
+
+exports.default = FormatTwitchEmotes;

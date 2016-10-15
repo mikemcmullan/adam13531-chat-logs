@@ -14,7 +14,7 @@ export default class FormatBTTVEmotes {
 	}
 
 	makeImage(emoteId) {
-		return `<img class="emoticon" src="http://cdn.betterttv.net/emote/${emoteId}/1x">`;
+		return `<img class="emoticon" src="//cdn.betterttv.net/emote/${emoteId}/1x">`;
 	}
 
 	getEmotes(url) {
