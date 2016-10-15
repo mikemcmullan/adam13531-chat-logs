@@ -19,6 +19,18 @@ export default class FormatBTTVEmotes {
 
 	getEmotes(url) {
 		return new Promise((resolve, reject) => {
+			const key = url.replace(/[^a-z0-9]/g, '');
+			const expires = ~~localStorage.getItem(`bttv-expires-${key}`);
+
+			if (expires && expires < Date.now()) {
+				const item = localStorage.getItem(`bttv-${key}`);
+
+				if (item) {
+					resolve(JSON.parse(item).emotes);
+					return;
+				}
+			}
+
 			var xhr = new XMLHttpRequest();
 
 			xhr.timeout = 2000;
@@ -27,6 +39,9 @@ export default class FormatBTTVEmotes {
 			xhr.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
 					const body = JSON.parse(this.responseText);
+
+					localStorage.setItem(`bttv-${key}`, this.responseText);
+					localStorage.setItem(`bttv-expires-${key}`, Date.now()+(60000*1440)); // 24 hour
 
 					resolve(body.emotes);
 				}
