@@ -87,5 +87,3 @@ var FormatBTTVEmotes = function () {
 
 	return FormatBTTVEmotes;
 }();
-
-exports.default = FormatBTTVEmotes;

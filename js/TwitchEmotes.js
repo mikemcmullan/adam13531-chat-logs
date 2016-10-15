@@ -68,5 +68,3 @@ var FormatTwitchEmotes = function () {
 
 	return FormatTwitchEmotes;
 }();
-
-exports.default = FormatTwitchEmotes;
