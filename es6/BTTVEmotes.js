@@ -13,8 +13,16 @@ export default class FormatBTTVEmotes {
 		]);
 	}
 
-	makeImage(emoteId) {
-		return `<img class="emoticon" src="//cdn.betterttv.net/emote/${emoteId}/1x">`;
+	makeImage() {
+		return `<img class="emoticon" src="//cdn.betterttv.net/emote/$1/1x">`;
+	}
+
+	makePlaceHolder(emoteId) {
+		return `$bttv(${emoteId})$`;
+	}
+
+	replacePlaceholders(message) {
+		return message.replace(/\$bttv\(([\w\d]+)\)\$/g, this.makeImage());
 	}
 
 	getEmotes(url) {
@@ -109,7 +117,7 @@ export default class FormatBTTVEmotes {
 
 		while (shouldContinue) {
 			if (this.shouldWeReplace(message, emote.code)) {
-				message = message.replace(emote.code, this.makeImage(emote.id));
+				message = message.replace(emote.code, this.makePlaceHolder(emote.id));
 			} else {
 				shouldContinue = false;
 			}
