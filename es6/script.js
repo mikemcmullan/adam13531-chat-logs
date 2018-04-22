@@ -1,6 +1,5 @@
 import Vue from 'vue';
-
-Vue.use(require('vue-resource'));
+import axios from 'axios';
 
 if(! String.linkify) {
     String.prototype.linkify = function() {
@@ -28,12 +27,10 @@ function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+axios.defaults.baseURL = 'https://api.twitch.mnt.co/adam13531';
+
 new Vue({
     el: '#app',
-
-    http: {
-        root: 'https://api.twitch.mnt.co/adam13531'
-    },
 
     data: {
         state: 'default',
@@ -126,7 +123,7 @@ new Vue({
                 const date = this.logs[this.logs.length-1].created_at;
                 const perPage = 100;
 
-                this.$http.get(`chat-logs?page=1&starting-from=${date}&limit=${perPage}`)
+                axios.get(`chat-logs?page=1&starting-from=${date}&limit=${perPage}`)
                     .then((response) => {
                         this.loadingBottom = false;
 
@@ -145,7 +142,7 @@ new Vue({
                 const date = this.logs[0].created_at;
                 const perPage = 100;
 
-                this.$http.get(`chat-logs?page=1&starting-from=${date}&limit=${perPage}&direction=newer`)
+                axios.get(`chat-logs?page=1&starting-from=${date}&limit=${perPage}&direction=newer`)
                     .then((response) => {
                         this.loadingTop = false;
 
@@ -197,7 +194,7 @@ new Vue({
 
             const perPage = 500;
 
-            this.$http.get(`chat-logs?page=${++this.page}&starting-from=${this.loadedTime}&limit=${perPage}&direction=older`)
+            axios.get(`chat-logs?page=${++this.page}&starting-from=${this.loadedTime}&limit=${perPage}&direction=older`)
                 .then((response) => {
                     this.loadingBottom = false;
 
@@ -228,7 +225,7 @@ new Vue({
 
             const perPage = 100;
 
-            this.$http.get(`chat-logs/search?page=${++this.page}&term=${this.searchKeyword}&limit=${perPage}`)
+            axios.get(`chat-logs/search?page=${++this.page}&term=${this.searchKeyword}&limit=${perPage}`)
                 .then((response) => {
                     this.loadingBottom = false;
 
@@ -249,7 +246,7 @@ new Vue({
             this.moreResultsOlder = true;
             this.moreResultsNewer = true;
 
-            this.$http.get(`chat-logs/conversation?date=${message.created_at}`)
+            axios.get(`chat-logs/conversation?date=${message.created_at}`)
                 .then((response) => {
                     this.loadingBottom = false;
 
